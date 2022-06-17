@@ -24,6 +24,8 @@ export default {
   --color-white: #fff;
   --color-black: #2B2C37;
   --text-size: 1.3rem;
+  --text-grey-dark: #6C7073;
+  --text-grey-light: #979B9E;
 }
 
 html {
@@ -60,6 +62,7 @@ h6 {
   /* -webkit-font-smoothing: antialiased; */
   /* -moz-osx-font-smoothing: grayscale; */
   max-width: 53.7rem;
+  /* max-width: 72.0rem; */
   margin: 2.4rem auto;
   padding: 2.4rem 2.4rem 1.6rem 2.4rem;
   border: 1px solid #2B2C37;
@@ -76,10 +79,11 @@ h6 {
   margin-top: 2.4rem;
 }
 
-/* .text-black {
-  color: #2B2C37;
+.text-grey-dark {
+  color: #6C7073;
 }
-.text-sm {
-  font-size: 13px;
-} */
+
+.text-grey-light {
+  color: #979B9E;
+}
 </style>

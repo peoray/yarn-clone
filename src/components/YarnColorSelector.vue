@@ -1,6 +1,6 @@
 <template>
   <div class="yarn-color-selection">
-    <div>
+    <div class="item-1">
       <h6 class="">Create your own palette by selecting yarn colors</h6>
       <p class="mt-8">
         By mixing your own yarn colors, you can create a custom palette you
@@ -15,49 +15,73 @@
       </p>
     </div>
 
-    <!-- <hr style="width: 500px; transform: rotate(90deg)" /> -->
+    <section id="active-yarns item-1">
+      <yarn-active-color @open-popup="openModal($event)" />
 
-    <section id="active-yarns">
-      <!-- <yarn-active-color /> -->
-      <div v-for="color in colors" :key="color">
-        <p class="te">{{ color }}</p>
-      </div>
+      <YarnLibrary :open="isOpen" @close="isOpen = false" class="grid">
+        <button
+          v-for="(color, index) in colors"
+          :key="index"
+          :style="{ backgroundColor: `${color.hex}` }"
+          :class="color.pantoneId === selectedColorId ? 'selected' : null"
+          class="cone-color" @click="getColor(color)"
+        ></button>
+      </YarnLibrary>
     </section>
   </div>
 </template>
 
 <script>
-// import YarnActiveColor from "./components/YarnActiveColor.vue";
-import colorss from "../data/yarn-colors.json";
-
-// import YarnActiveColor from "./components/YarnActiveColor.vue";
-// import AppHeader from "./components/AppHeader.vue";
-// import AppHeader from "./components/AppHeader";
+import YarnActiveColor from './YarnActiveColor';
+import { yarnColors } from '../data/yarn-colors.json';
+import YarnLibrary from './YarnLibrary.vue';
 
 export default {
-  name: "YarnColorSelector",
+  name: 'YarnColorSelector',
   components: {
-    // YarnActiveColor,
-    // YarnColor,
-    // AppHeader,
+    YarnActiveColor,
+    YarnLibrary,
   },
   data() {
     return {
-      colors: colorss,
+      colors: yarnColors,
+      isOpen: false,
+      selectedColorId: null,
+      colorChange: null
     };
   },
-  // computed: {
-  //   colors() {
-  //     return colorss;
-  //   },
-  // },
+  methods: {
+    openModal(event) {
+      this.isOpen = true;
+      this.selectedColorId = event.pantoneId;
+    },
+    getColor(color) {
+      this.colorChange = color
+      console.log(event)
+
+    }
+  },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.item-a {
+  grid-area: content;
+}
+.item-b {
+  grid-area: cones;
+}
 .yarn-color-selection {
-  display: flex;
+  /* display: flex; */
+  /* justify-content: space-between; */
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  /* justify-content: space-around; */
+  grid-template-areas:
+    'content . cones'
+    'content . cones'
+    'content . cones';
   margin-top: 2.4rem;
 }
 
@@ -67,5 +91,28 @@ export default {
 
 .te {
   font-size: 100px;
+}
+.grid {
+  display: flex;
+}
+
+.cone-color {
+  display: flex;
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 100%;
+  cursor: pointer;
+  /* margin-right: 1.6rem; */
+}
+
+.selected {
+  border: 2px solid blue;
+    /* width: 4.8rem; */
+  /* height: 4.8rem; */
+}
+
+button {
+  background: transparent;
+  border: 0;
 }
 </style>
